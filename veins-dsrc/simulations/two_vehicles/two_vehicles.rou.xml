@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- duarouter -n two_vehicles.net.xml -_route-files two_vehicles.trips.xml -o two_vehicles.rou.xml -->
+<!-- generated on 2021-11-07 22:19:14 by Eclipse SUMO duarouter Version 1.10.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="two_vehicles.net.xml"/>
+        <route-files value="two_vehicles.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="two_vehicles.rou.xml"/>
+        <alternatives-output value="two_vehicles.rou.alt.xml"/>
+    </output>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="0" depart="0.00" departLane="0">
+        <route edges="e1 e2 e3"/>
+    </vehicle>
+    <vehicle id="1" depart="1.00" departLane="1">
+        <route edges="e2 e3"/>
+    </vehicle>
+</routes>

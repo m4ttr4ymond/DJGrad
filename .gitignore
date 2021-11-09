@@ -1,0 +1,4 @@
+# veins
+veins-dsrc/**/*_dbg
+veins-dsrc/**/results/
+veins-dsrc/**/*.so
