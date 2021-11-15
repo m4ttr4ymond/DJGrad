@@ -51,7 +51,8 @@
   /home/mwilmes2/GradSchool/veins/src/veins/base/utils/EnumBitset.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCIRegionOfInterest.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCICommandInterface.h \
-  /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h
+  /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h \
+  two_vehicles/TwoVehiclesMessage_m.h
 
 two_vehicles/TwoVehiclesApp.h:
 
@@ -158,3 +159,5 @@ two_vehicles/TwoVehiclesApp.h:
 /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCICommandInterface.h:
 
 /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h:
+
+two_vehicles/TwoVehiclesMessage_m.h:
