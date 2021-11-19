@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2016 David Eckhoff <david.eckhoff@fau.de>
+// Copyright (C) 2011 David Eckhoff <eckhoff@cs.fau.de>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
@@ -20,14 +20,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package veins_dsrc.gradient_simple;
-import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
+import veins.base.utils.Coord;
+import veins.modules.messages.BaseFrame1609_4;
+import veins.base.utils.SimpleAddress;
 
-//
-// network description file for your Veins Application. Add parameters here
-//
-simple GradientSimpleApp extends DemoBaseApplLayer
-{
-    @class(veins::GradientSimpleApp);
-    string appName = default("My Gradient Simple App!");
+namespace veins;
+
+packet SendGradientMessage extends BaseFrame1609_4 {
+    int gradientHash;
+    LAddress::L2Type senderAddress = -1;
 }

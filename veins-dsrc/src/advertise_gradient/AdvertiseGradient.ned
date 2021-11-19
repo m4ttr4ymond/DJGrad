@@ -20,14 +20,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package veins_dsrc.gradient_simple;
+package veins_dsrc.advertise_gradient;
 import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
 //
 // network description file for your Veins Application. Add parameters here
 //
-simple GradientSimpleApp extends DemoBaseApplLayer
+simple AdvertiseGradientApp extends DemoBaseApplLayer
 {
-    @class(veins::GradientSimpleApp);
-    string appName = default("My Gradient Simple App!");
+    @class(veins::AdvertiseGradientApp);
+    string appName = default("My Advertise Gradient App!");
 }

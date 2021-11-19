@@ -28,10 +28,19 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/gradient_simple/GradientSimpleApp.o $O/two_vehicles/TwoVehiclesApp.o $O/gradient_simple/GradientSimpleMessage_m.o $O/two_vehicles/TwoVehiclesMessage_m.o
+OBJS = \
+    $O/advertise_gradient/AdvertiseGradientApp.o \
+    $O/gradient_simple/GradientSimpleApp.o \
+    $O/two_vehicles/TwoVehiclesApp.o \
+    $O/advertise_gradient/RequestGradientMessage_m.o \
+    $O/advertise_gradient/SendGradientMessage_m.o \
+    $O/gradient_simple/GradientSimpleMessage_m.o \
+    $O/two_vehicles/TwoVehiclesMessage_m.o
 
 # Message files
 MSGFILES = \
+    advertise_gradient/RequestGradientMessage.msg \
+    advertise_gradient/SendGradientMessage.msg \
     gradient_simple/GradientSimpleMessage.msg \
     two_vehicles/TwoVehiclesMessage.msg
 
