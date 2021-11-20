@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 
+
 <!--
 // Copyright (C) 2011 Christoph Sommer <sommer@ccs-labs.org>
 //
@@ -33,9 +34,8 @@
 
 <!-- debug config -->
 <launch>
-    <basedir path="../two_vehicles/" />
-    <copy file="two_vehicles.net.xml" />
-    <copy file="two_vehicles.rou.xml" />
-    <copy file="two_vehicles.poly.xml" />
-    <copy file="two_vehicles.sumo.cfg" type="config" />
+    <copy file="highway.net.xml" />
+    <copy file="highway.rou.xml" />
+    <copy file="highway.poly.xml" />
+    <copy file="highway.sumo.cfg" type="config" />
 </launch>

@@ -1,5 +1,6 @@
-../out/clang-debug/src/two_vehicles/TwoVehiclesApp.o: \
-  two_vehicles/TwoVehiclesApp.cc two_vehicles/TwoVehiclesApp.h \
+../out/clang-debug/src/advertise_gradient/AdvertiseGradientApp.o: \
+  advertise_gradient/AdvertiseGradientApp.cc \
+  advertise_gradient/AdvertiseGradientApp.h \
   /home/mwilmes2/GradSchool/veins/src/veins/veins.h \
   /home/mwilmes2/omnetpp-5.7/include/omnetpp.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/application/ieee80211p/DemoBaseApplLayer.h \
@@ -52,9 +53,10 @@
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCIRegionOfInterest.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCICommandInterface.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h \
-  two_vehicles/TwoVehiclesMessage_m.h
+  advertise_gradient/RequestGradientMessage_m.h \
+  advertise_gradient/SendGradientMessage_m.h
 
-two_vehicles/TwoVehiclesApp.h:
+advertise_gradient/AdvertiseGradientApp.h:
 
 /home/mwilmes2/GradSchool/veins/src/veins/veins.h:
 
@@ -160,4 +162,6 @@ two_vehicles/TwoVehiclesApp.h:
 
 /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h:
 
-two_vehicles/TwoVehiclesMessage_m.h:
+advertise_gradient/RequestGradientMessage_m.h:
+
+advertise_gradient/SendGradientMessage_m.h:
