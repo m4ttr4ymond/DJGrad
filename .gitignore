@@ -61,3 +61,10 @@ docs/source/changelog.md
 
 data/*
 *.pickle
+=======
+# veins
+veins-dsrc/**/*_dbg
+veins-dsrc/**/results/
+veins-dsrc/**/*.so
+veins-dsrc/**/.qtenvrc
+veins-dsrc/**/*.anf
