@@ -31,6 +31,8 @@ using namespace veins;
 
 Define_Module(veins::AdvertiseGradientApp);
 
+static const std::string gradient_vehicle_color = "blue";
+
 void AdvertiseGradientApp::initialize(int stage)
 {
     DemoBaseApplLayer::initialize(stage);
@@ -42,9 +44,9 @@ void AdvertiseGradientApp::initialize(int stage)
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
         std::string node_name = findHost()->getFullName();
-        if (node_name == "node[0]") {
+        if (node_name == "node[37]") {
           gradientHash = myId + 1;
-          findHost()->getDisplayString().setTagArg("i", 1, "green");
+          findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
         } else {
           gradientHash = 0;
         }
@@ -80,8 +82,8 @@ void AdvertiseGradientApp::onWSM(BaseFrame1609_4* wsm)
         EV << findHost()->getFullName() << " sending gradients to " << senderAddress << std::endl;
         sendDown(wsm);
     } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {
-        // Set vehicle to green
-        findHost()->getDisplayString().setTagArg("i", 1, "green");
+        // Set vehicle to blue
+        findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
         
         LAddress::L2Type senderAddress = sgm->getSenderAddress();
         int senderGradientHash = sgm->getGradientHash();
