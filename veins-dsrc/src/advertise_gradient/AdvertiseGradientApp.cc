@@ -44,7 +44,7 @@ void AdvertiseGradientApp::initialize(int stage)
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
         std::string node_name = findHost()->getFullName();
-        if (node_name == "node[37]") {
+        if (node_name == "node[0]") {
           gradientHash = myId + 1;
           findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
           gradientCount = 1;
@@ -52,7 +52,6 @@ void AdvertiseGradientApp::initialize(int stage)
           gradientHash = 0;
           gradientCount = 0;
         }
-        // gradientCountVector.recordWithTimestamp(simTime(), gradientCount);
         EV << "Initialized " << node_name << " with vehicle ID " << myId
            << " and gradientHash " << gradientHash << std::endl;
     }
