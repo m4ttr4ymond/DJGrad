@@ -58,6 +58,10 @@ protected:
     bool broadcasting;
     uint32_t gradientHash;
     std::unordered_set<LAddress::L2Type> receivedAddresses;
+
+    /* stats */
+    uint32_t gradientCount;
+    cOutVector gradientCountVector{"gradientCount"};
 };
 
 } // namespace veins
