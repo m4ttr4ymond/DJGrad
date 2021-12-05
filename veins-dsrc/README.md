@@ -62,7 +62,7 @@ See [veins_scripts/](veins_scripts/) folder
 - Contains scripts from https://github.com/veins/veins_scripts
 
 ### Count number of vehicles with gradients
-`./sca-results.sh <scenario>` (e.g. `./sca-results.sh highway_small`)
+`./results.sh <scenario> <.sca results file>` (e.g. `./sca-results.sh highway_small Default-250s.sca`)
 
 ### Plot number of vehilces with gradients over time
-`./vec-results.sh <scenario>` (e.g. `./vec-results.sh highway_small`)
+`./results.sh <scenario> <.vec results file>` (e.g. `./vec-results.sh highway_small ChannelSwitching-1000s.vec`)
