@@ -1,7 +1,12 @@
 ## Dependencies
+### Program Dependencies
 1. `veins 5.1`
 2. `OMNeT++ 5.7`
 3. `SUMO v1.10.0`
+
+### Python Dependencies
+1. `matplotlib`
+2. `pandas`
 
 ## Launching OMNeT++
 1. In your Terminal window, navigate to folder where OMNeT++ was installed (e.g., `~/omnetpp-5.7/`)
@@ -51,3 +56,13 @@
 3. Right-click its `omnetpp.ini` file > `Run As` > `OMNeT++ Simulation`
 4. Select any option under `Config name` > `OK`
 5. Click the `RUN` button
+
+## Converting Results Files
+See [veins_scripts/](veins_scripts/) folder
+- Contains scripts from https://github.com/veins/veins_scripts
+
+### Count number of vehicles with gradients
+`./sca-results.sh <scenario>` (e.g. `./sca-results.sh highway_small`)
+
+### Plot number of vehilces with gradients over time
+`./vec-results.sh <scenario>` (e.g. `./vec-results.sh highway_small`)
