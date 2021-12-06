@@ -56,11 +56,14 @@ protected:
     void handlePositionUpdate(cObject* obj) override;
 
     bool broadcasting;
+    bool transferring;
+    uint32_t transfer_time;
     uint32_t gradientHash;
+    uint32_t percentComplete;
     std::unordered_set<LAddress::L2Type> receivedAddresses;
 
     /* stats */
-    uint32_t gradientCount;
+    double gradientCount;
     cOutVector gradientCountVector{"gradientCount"};
 };
 

@@ -32,6 +32,7 @@ using namespace veins;
 Define_Module(veins::AdvertiseGradientApp);
 
 static const std::string gradient_vehicle_color = "blue";
+static const uint32_t MAX_WAIT_TIME = 2;
 
 void AdvertiseGradientApp::initialize(int stage)
 {
@@ -40,11 +41,14 @@ void AdvertiseGradientApp::initialize(int stage)
         // Initializing members and pointers of your application goes here
         EV << "Initializing " << par("appName").stringValue() << std::endl;
         broadcasting = false;
+        transferring = false;
+        percentComplete = 0;
+        transfer_time = 0;
     }
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
         std::string node_name = findHost()->getFullName();
-        if (node_name == "node[0]") {
+        if (node_name == "node[37]") {
           gradientHash = myId + 1;
           findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
           gradientCount = 1;
@@ -83,18 +87,23 @@ void AdvertiseGradientApp::onWSM(BaseFrame1609_4* wsm)
         wsm->setSenderAddress(myId);
         wsm->setGradientHash(gradientHash);
         EV << findHost()->getFullName() << " sending gradients to " << senderAddress << std::endl;
-        sendDown(wsm);
-    } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {
-        // Set vehicle to blue
-        findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
-        
+        // wsm->setBitLength(1e3);
+        scheduleAt(simTime(), wsm);
+        transferring = true;
+    } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {        
         LAddress::L2Type senderAddress = sgm->getSenderAddress();
         int senderGradientHash = sgm->getGradientHash();
-        EV << findHost()->getFullName() << " received gradientHash " \
-           << senderGradientHash << " from " << senderAddress << std::endl;
-        gradientHash = senderGradientHash;
-        gradientCount = 1;
-        receivedAddresses.insert(senderAddress);
+        if (receivedAddresses.find(senderAddress) != receivedAddresses.end()) {
+            gradientCount = 1;
+            gradientHash = senderGradientHash;
+            // Set vehicle to blue
+            findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
+        } else {
+            EV << findHost()->getFullName() << " received first gradientHash " \
+               << senderGradientHash << " from " << senderAddress << std::endl;
+            receivedAddresses.insert(senderAddress);
+            gradientCount = std::max(gradientCount, 0.5);
+        }
     }
 }
 
@@ -119,7 +128,20 @@ void AdvertiseGradientApp::onWSA(DemoServiceAdvertisment* wsa)
 
 void AdvertiseGradientApp::handleSelfMsg(cMessage* msg)
 {
-    DemoBaseApplLayer::handleSelfMsg(msg);
+    if (! transferring) {
+        DemoBaseApplLayer::handleSelfMsg(msg);
+    }
+    if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(msg)) {
+        sendDown(sgm);
+        percentComplete += 50;
+        if (percentComplete < 100) {
+            transferring = true;
+            scheduleAt(simTime() + MAX_WAIT_TIME - 1, sgm->dup());
+        } else {
+            percentComplete = 0;
+            transferring = false;
+        }
+    }
     // this method is for self messages (mostly timers)
     // it is important to call the DemoBaseApplLayer function for BSM and WSM transmission
 }
@@ -129,6 +151,15 @@ void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
     // the vehicle has moved. Code that reacts to new positions goes here.
     // member variables such as currentPosition and currentSpeed are updated in the parent class
     DemoBaseApplLayer::handlePositionUpdate(obj);
+
+    if (transferring) {
+        transfer_time++;
+    }
+
+    if (transfer_time > MAX_WAIT_TIME + 1) {
+        transferring = false;
+        transfer_time = 0;
+    }
 
     // If vehicle has gradients
     if (gradientHash != 0 && ! broadcasting) {
