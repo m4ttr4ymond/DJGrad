@@ -41,8 +41,7 @@ void AdvertiseGradientApp::initialize(int stage)
         // Initializing members and pointers of your application goes here
         EV << "Initializing " << par("appName").stringValue() << std::endl;
         broadcasting = false;
-        transferring = false;
-        percentComplete = 0;
+        transfers_in_progress = 0;
         transfer_time = 0;
     }
     else if (stage == 1) {
@@ -65,6 +64,9 @@ void AdvertiseGradientApp::finish()
 {
     DemoBaseApplLayer::finish();
     // statistics recording goes here
+    if (gradientCount < 1) {
+        gradientCount = 0;
+    }
     recordScalar("gradientCount", gradientCount);
 }
 
@@ -89,7 +91,7 @@ void AdvertiseGradientApp::onWSM(BaseFrame1609_4* wsm)
         EV << findHost()->getFullName() << " sending gradients to " << senderAddress << std::endl;
         // wsm->setBitLength(1e3);
         scheduleAt(simTime(), wsm);
-        transferring = true;
+        transfers_in_progress = transfers_in_progress + 2;
     } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {        
         LAddress::L2Type senderAddress = sgm->getSenderAddress();
         int senderGradientHash = sgm->getGradientHash();
@@ -128,18 +130,14 @@ void AdvertiseGradientApp::onWSA(DemoServiceAdvertisment* wsa)
 
 void AdvertiseGradientApp::handleSelfMsg(cMessage* msg)
 {
-    if (! transferring) {
+    if (transfers_in_progress == 0) {
         DemoBaseApplLayer::handleSelfMsg(msg);
     }
     if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(msg)) {
         sendDown(sgm);
-        percentComplete += 50;
-        if (percentComplete < 100) {
-            transferring = true;
+        transfers_in_progress = transfers_in_progress - 1;
+        if (transfers_in_progress > 0) {
             scheduleAt(simTime() + MAX_WAIT_TIME - 1, sgm->dup());
-        } else {
-            percentComplete = 0;
-            transferring = false;
         }
     }
     // this method is for self messages (mostly timers)
@@ -152,13 +150,12 @@ void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
     // member variables such as currentPosition and currentSpeed are updated in the parent class
     DemoBaseApplLayer::handlePositionUpdate(obj);
 
-    if (transferring) {
+    if (transfers_in_progress > 0) {
         transfer_time++;
-    }
-
-    if (transfer_time > MAX_WAIT_TIME + 1) {
-        transferring = false;
-        transfer_time = 0;
+        if (transfer_time > MAX_WAIT_TIME) {
+            transfers_in_progress = transfers_in_progress - 1;
+            transfer_time = 0;
+        }
     }
 
     // If vehicle has gradients
@@ -168,5 +165,9 @@ void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
         broadcasting = true;
     }
 
-    gradientCountVector.recordWithTimestamp(simTime(), gradientCount);
+    if (gradientCount < 1) {
+        gradientCountVector.recordWithTimestamp(simTime(), 0);
+    } else {
+        gradientCountVector.recordWithTimestamp(simTime(), gradientCount);
+    }
 }
