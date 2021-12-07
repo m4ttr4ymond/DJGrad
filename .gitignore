@@ -69,3 +69,4 @@ veins-dsrc/**/*.so
 veins-dsrc/**/.qtenvrc
 veins-dsrc/**/*.anf
 veins-dsrc/.computed/
+!veins-dsrc/src

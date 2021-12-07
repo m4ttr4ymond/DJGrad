@@ -42,7 +42,7 @@ namespace veins {
  *
  */
 
-class VEINS_API AdvertiseGradientApp : public DemoBaseApplLayer {
+class VEINS_API AdvertiseMultiGradApp : public DemoBaseApplLayer {
 public:
     void initialize(int stage) override;
     void finish() override;
@@ -56,11 +56,13 @@ protected:
     void handlePositionUpdate(cObject* obj) override;
 
     bool broadcasting;
+    uint32_t transfers_in_progress;
+    uint32_t prev_transfers_in_progress;
     uint32_t gradientHash;
     std::unordered_set<LAddress::L2Type> receivedAddresses;
 
     /* stats */
-    uint32_t gradientCount;
+    double gradientCount;
     cOutVector gradientCountVector{"gradientCount"};
 };
 

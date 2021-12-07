@@ -7,6 +7,7 @@
 ### Python Dependencies
 1. `matplotlib`
 2. `pandas`
+3. `tqdm`
 
 ## Launching OMNeT++
 1. In your Terminal window, navigate to folder where OMNeT++ was installed (e.g., `~/omnetpp-5.7/`)
