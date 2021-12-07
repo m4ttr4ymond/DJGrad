@@ -42,7 +42,7 @@ void AdvertiseGradientApp::initialize(int stage)
         EV << "Initializing " << par("appName").stringValue() << std::endl;
         broadcasting = false;
         transfers_in_progress = 0;
-        transfer_time = 0;
+        prev_transfers_in_progress = 0;
     }
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
@@ -150,13 +150,10 @@ void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
     // member variables such as currentPosition and currentSpeed are updated in the parent class
     DemoBaseApplLayer::handlePositionUpdate(obj);
 
-    if (transfers_in_progress > 0) {
-        transfer_time++;
-        if (transfer_time > MAX_WAIT_TIME) {
-            transfers_in_progress = transfers_in_progress - 1;
-            transfer_time = 0;
-        }
+    if (transfers_in_progress == prev_transfers_in_progress) {
+        transfers_in_progress = 0;
     }
+    prev_transfers_in_progress = transfers_in_progress;
 
     // If vehicle has gradients
     if (gradientHash != 0 && ! broadcasting) {

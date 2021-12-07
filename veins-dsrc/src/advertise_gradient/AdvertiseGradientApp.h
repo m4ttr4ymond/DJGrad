@@ -57,7 +57,7 @@ protected:
 
     bool broadcasting;
     uint32_t transfers_in_progress;
-    uint32_t transfer_time;
+    uint32_t prev_transfers_in_progress;
     uint32_t gradientHash;
     std::unordered_set<LAddress::L2Type> receivedAddresses;
 
