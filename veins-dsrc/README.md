@@ -7,6 +7,7 @@
 ### Python Dependencies
 1. `matplotlib`
 2. `pandas`
+3. `tqdm`
 
 ## Launching OMNeT++
 1. In your Terminal window, navigate to folder where OMNeT++ was installed (e.g., `~/omnetpp-5.7/`)
@@ -27,7 +28,9 @@
 3. Click `Directory...`
 4. Navigate to folder where you downloaded veins > Click `Open`
 5. Click `Finish`
-6. Right-click on `veins` in the workspace > `Build Project`
+6. Open `Mac1609_4.cc`
+7. In `Mac1609_4::handleUnicast()`, move `sendUp(wsm.release());` outside of the `if` block
+8. Right-click on `veins` in the workspace > `Build Project`
 
 ## Linking veins-dsrc with veins
 1. Right-click on `veins-dsrc` in the workspace > `Properties`

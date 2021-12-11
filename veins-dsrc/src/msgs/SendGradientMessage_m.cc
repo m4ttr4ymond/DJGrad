@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.7 from advertise_gradient/RequestGradientMessage.msg.
+// Generated file, do not edit! Created by nedtool 5.7 from msgs/SendGradientMessage.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -27,7 +27,7 @@
 #include <iostream>
 #include <sstream>
 #include <memory>
-#include "RequestGradientMessage_m.h"
+#include "SendGradientMessage_m.h"
 
 namespace omnetpp {
 
@@ -207,22 +207,22 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
     return out;
 }
 
-Register_Class(RequestGradientMessage)
+Register_Class(SendGradientMessage)
 
-RequestGradientMessage::RequestGradientMessage(const char *name, short kind) : ::veins::BaseFrame1609_4(name, kind)
+SendGradientMessage::SendGradientMessage(const char *name, short kind) : ::veins::BaseFrame1609_4(name, kind)
 {
 }
 
-RequestGradientMessage::RequestGradientMessage(const RequestGradientMessage& other) : ::veins::BaseFrame1609_4(other)
+SendGradientMessage::SendGradientMessage(const SendGradientMessage& other) : ::veins::BaseFrame1609_4(other)
 {
     copy(other);
 }
 
-RequestGradientMessage::~RequestGradientMessage()
+SendGradientMessage::~SendGradientMessage()
 {
 }
 
-RequestGradientMessage& RequestGradientMessage::operator=(const RequestGradientMessage& other)
+SendGradientMessage& SendGradientMessage::operator=(const SendGradientMessage& other)
 {
     if (this == &other) return *this;
     ::veins::BaseFrame1609_4::operator=(other);
@@ -230,43 +230,57 @@ RequestGradientMessage& RequestGradientMessage::operator=(const RequestGradientM
     return *this;
 }
 
-void RequestGradientMessage::copy(const RequestGradientMessage& other)
+void SendGradientMessage::copy(const SendGradientMessage& other)
 {
+    this->gradientHash = other.gradientHash;
     this->senderAddress = other.senderAddress;
 }
 
-void RequestGradientMessage::parsimPack(omnetpp::cCommBuffer *b) const
+void SendGradientMessage::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::veins::BaseFrame1609_4::parsimPack(b);
+    doParsimPacking(b,this->gradientHash);
     doParsimPacking(b,this->senderAddress);
 }
 
-void RequestGradientMessage::parsimUnpack(omnetpp::cCommBuffer *b)
+void SendGradientMessage::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::veins::BaseFrame1609_4::parsimUnpack(b);
+    doParsimUnpacking(b,this->gradientHash);
     doParsimUnpacking(b,this->senderAddress);
 }
 
-const LAddress::L2Type& RequestGradientMessage::getSenderAddress() const
+int SendGradientMessage::getGradientHash() const
+{
+    return this->gradientHash;
+}
+
+void SendGradientMessage::setGradientHash(int gradientHash)
+{
+    this->gradientHash = gradientHash;
+}
+
+const LAddress::L2Type& SendGradientMessage::getSenderAddress() const
 {
     return this->senderAddress;
 }
 
-void RequestGradientMessage::setSenderAddress(const LAddress::L2Type& senderAddress)
+void SendGradientMessage::setSenderAddress(const LAddress::L2Type& senderAddress)
 {
     this->senderAddress = senderAddress;
 }
 
-class RequestGradientMessageDescriptor : public omnetpp::cClassDescriptor
+class SendGradientMessageDescriptor : public omnetpp::cClassDescriptor
 {
   private:
     mutable const char **propertynames;
     enum FieldConstants {
+        FIELD_gradientHash,
         FIELD_senderAddress,
     };
   public:
-    RequestGradientMessageDescriptor();
-    virtual ~RequestGradientMessageDescriptor();
+    SendGradientMessageDescriptor();
+    virtual ~SendGradientMessageDescriptor();
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
@@ -288,24 +302,24 @@ class RequestGradientMessageDescriptor : public omnetpp::cClassDescriptor
     virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
 };
 
-Register_ClassDescriptor(RequestGradientMessageDescriptor)
+Register_ClassDescriptor(SendGradientMessageDescriptor)
 
-RequestGradientMessageDescriptor::RequestGradientMessageDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(veins::RequestGradientMessage)), "veins::BaseFrame1609_4")
+SendGradientMessageDescriptor::SendGradientMessageDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(veins::SendGradientMessage)), "veins::BaseFrame1609_4")
 {
     propertynames = nullptr;
 }
 
-RequestGradientMessageDescriptor::~RequestGradientMessageDescriptor()
+SendGradientMessageDescriptor::~SendGradientMessageDescriptor()
 {
     delete[] propertynames;
 }
 
-bool RequestGradientMessageDescriptor::doesSupport(omnetpp::cObject *obj) const
+bool SendGradientMessageDescriptor::doesSupport(omnetpp::cObject *obj) const
 {
-    return dynamic_cast<RequestGradientMessage *>(obj)!=nullptr;
+    return dynamic_cast<SendGradientMessage *>(obj)!=nullptr;
 }
 
-const char **RequestGradientMessageDescriptor::getPropertyNames() const
+const char **SendGradientMessageDescriptor::getPropertyNames() const
 {
     if (!propertynames) {
         static const char *names[] = {  nullptr };
@@ -316,19 +330,19 @@ const char **RequestGradientMessageDescriptor::getPropertyNames() const
     return propertynames;
 }
 
-const char *RequestGradientMessageDescriptor::getProperty(const char *propertyname) const
+const char *SendGradientMessageDescriptor::getProperty(const char *propertyname) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     return basedesc ? basedesc->getProperty(propertyname) : nullptr;
 }
 
-int RequestGradientMessageDescriptor::getFieldCount() const
+int SendGradientMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 1+basedesc->getFieldCount() : 1;
+    return basedesc ? 2+basedesc->getFieldCount() : 2;
 }
 
-unsigned int RequestGradientMessageDescriptor::getFieldTypeFlags(int field) const
+unsigned int SendGradientMessageDescriptor::getFieldTypeFlags(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -337,12 +351,13 @@ unsigned int RequestGradientMessageDescriptor::getFieldTypeFlags(int field) cons
         field -= basedesc->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
+        FD_ISEDITABLE,    // FIELD_gradientHash
         0,    // FIELD_senderAddress
     };
-    return (field >= 0 && field < 1) ? fieldTypeFlags[field] : 0;
+    return (field >= 0 && field < 2) ? fieldTypeFlags[field] : 0;
 }
 
-const char *RequestGradientMessageDescriptor::getFieldName(int field) const
+const char *SendGradientMessageDescriptor::getFieldName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -351,20 +366,22 @@ const char *RequestGradientMessageDescriptor::getFieldName(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldNames[] = {
+        "gradientHash",
         "senderAddress",
     };
-    return (field >= 0 && field < 1) ? fieldNames[field] : nullptr;
+    return (field >= 0 && field < 2) ? fieldNames[field] : nullptr;
 }
 
-int RequestGradientMessageDescriptor::findField(const char *fieldName) const
+int SendGradientMessageDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0] == 's' && strcmp(fieldName, "senderAddress") == 0) return base+0;
+    if (fieldName[0] == 'g' && strcmp(fieldName, "gradientHash") == 0) return base+0;
+    if (fieldName[0] == 's' && strcmp(fieldName, "senderAddress") == 0) return base+1;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
-const char *RequestGradientMessageDescriptor::getFieldTypeString(int field) const
+const char *SendGradientMessageDescriptor::getFieldTypeString(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -373,12 +390,13 @@ const char *RequestGradientMessageDescriptor::getFieldTypeString(int field) cons
         field -= basedesc->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
+        "int",    // FIELD_gradientHash
         "veins::LAddress::L2Type",    // FIELD_senderAddress
     };
-    return (field >= 0 && field < 1) ? fieldTypeStrings[field] : nullptr;
+    return (field >= 0 && field < 2) ? fieldTypeStrings[field] : nullptr;
 }
 
-const char **RequestGradientMessageDescriptor::getFieldPropertyNames(int field) const
+const char **SendGradientMessageDescriptor::getFieldPropertyNames(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -391,7 +409,7 @@ const char **RequestGradientMessageDescriptor::getFieldPropertyNames(int field) 
     }
 }
 
-const char *RequestGradientMessageDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *SendGradientMessageDescriptor::getFieldProperty(int field, const char *propertyname) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -404,7 +422,7 @@ const char *RequestGradientMessageDescriptor::getFieldProperty(int field, const 
     }
 }
 
-int RequestGradientMessageDescriptor::getFieldArraySize(void *object, int field) const
+int SendGradientMessageDescriptor::getFieldArraySize(void *object, int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -412,13 +430,13 @@ int RequestGradientMessageDescriptor::getFieldArraySize(void *object, int field)
             return basedesc->getFieldArraySize(object, field);
         field -= basedesc->getFieldCount();
     }
-    RequestGradientMessage *pp = (RequestGradientMessage *)object; (void)pp;
+    SendGradientMessage *pp = (SendGradientMessage *)object; (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-const char *RequestGradientMessageDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+const char *SendGradientMessageDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -426,13 +444,13 @@ const char *RequestGradientMessageDescriptor::getFieldDynamicTypeString(void *ob
             return basedesc->getFieldDynamicTypeString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    RequestGradientMessage *pp = (RequestGradientMessage *)object; (void)pp;
+    SendGradientMessage *pp = (SendGradientMessage *)object; (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string RequestGradientMessageDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string SendGradientMessageDescriptor::getFieldValueAsString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -440,14 +458,15 @@ std::string RequestGradientMessageDescriptor::getFieldValueAsString(void *object
             return basedesc->getFieldValueAsString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    RequestGradientMessage *pp = (RequestGradientMessage *)object; (void)pp;
+    SendGradientMessage *pp = (SendGradientMessage *)object; (void)pp;
     switch (field) {
+        case FIELD_gradientHash: return long2string(pp->getGradientHash());
         case FIELD_senderAddress: {std::stringstream out; out << pp->getSenderAddress(); return out.str();}
         default: return "";
     }
 }
 
-bool RequestGradientMessageDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+bool SendGradientMessageDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -455,13 +474,14 @@ bool RequestGradientMessageDescriptor::setFieldValueAsString(void *object, int f
             return basedesc->setFieldValueAsString(object,field,i,value);
         field -= basedesc->getFieldCount();
     }
-    RequestGradientMessage *pp = (RequestGradientMessage *)object; (void)pp;
+    SendGradientMessage *pp = (SendGradientMessage *)object; (void)pp;
     switch (field) {
+        case FIELD_gradientHash: pp->setGradientHash(string2long(value)); return true;
         default: return false;
     }
 }
 
-const char *RequestGradientMessageDescriptor::getFieldStructName(int field) const
+const char *SendGradientMessageDescriptor::getFieldStructName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -474,7 +494,7 @@ const char *RequestGradientMessageDescriptor::getFieldStructName(int field) cons
     };
 }
 
-void *RequestGradientMessageDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+void *SendGradientMessageDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -482,7 +502,7 @@ void *RequestGradientMessageDescriptor::getFieldStructValuePointer(void *object,
             return basedesc->getFieldStructValuePointer(object, field, i);
         field -= basedesc->getFieldCount();
     }
-    RequestGradientMessage *pp = (RequestGradientMessage *)object; (void)pp;
+    SendGradientMessage *pp = (SendGradientMessage *)object; (void)pp;
     switch (field) {
         case FIELD_senderAddress: return toVoidPtr(&pp->getSenderAddress()); break;
         default: return nullptr;

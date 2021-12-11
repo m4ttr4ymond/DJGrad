@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.7 from advertise_gradient/SendGradientMessage.msg.
+// Generated file, do not edit! Created by nedtool 5.7 from msgs/SendGradientMessage.msg.
 //
 
 #ifndef __VEINS_SENDGRADIENTMESSAGE_M_H
@@ -32,7 +32,7 @@ class SendGradientMessage;
 namespace veins {
 
 /**
- * Class generated from <tt>advertise_gradient/SendGradientMessage.msg:29</tt> by nedtool.
+ * Class generated from <tt>msgs/SendGradientMessage.msg:29</tt> by nedtool.
  * <pre>
  * packet SendGradientMessage extends BaseFrame1609_4
  * {

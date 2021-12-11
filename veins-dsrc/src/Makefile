@@ -30,18 +30,19 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/advertise_gradient/AdvertiseGradientApp.o \
+    $O/advertise_multi_grad/AdvertiseMultiGradApp.o \
     $O/gradient_simple/GradientSimpleApp.o \
     $O/two_vehicles/TwoVehiclesApp.o \
-    $O/advertise_gradient/RequestGradientMessage_m.o \
-    $O/advertise_gradient/SendGradientMessage_m.o \
     $O/gradient_simple/GradientSimpleMessage_m.o \
+    $O/msgs/RequestGradientMessage_m.o \
+    $O/msgs/SendGradientMessage_m.o \
     $O/two_vehicles/TwoVehiclesMessage_m.o
 
 # Message files
 MSGFILES = \
-    advertise_gradient/RequestGradientMessage.msg \
-    advertise_gradient/SendGradientMessage.msg \
     gradient_simple/GradientSimpleMessage.msg \
+    msgs/RequestGradientMessage.msg \
+    msgs/SendGradientMessage.msg \
     two_vehicles/TwoVehiclesMessage.msg
 
 # SM files
