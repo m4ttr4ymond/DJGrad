@@ -89,7 +89,6 @@ void AdvertiseMultiGradApp::onWSM(BaseFrame1609_4* wsm)
         wsm->setSenderAddress(myId);
         wsm->setGradientHash(gradientHash);
         EV << findHost()->getFullName() << " sending gradients to " << senderAddress << std::endl;
-        // wsm->setBitLength(1e3);
         scheduleAt(simTime(), wsm);
         transfers_in_progress = transfers_in_progress + 2;
     } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {        
