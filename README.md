@@ -1,4 +1,4 @@
-# DJGrad
+# DJGrad [[pdf]](./571_final_project_report.pdf)
 The goal of this project is to create a network protocol capable of sending machine ML model updates between CAVs that are level 2-4 (human-in-the-loop), without the need for cloud communication or cellular networks.
 
 <p align="center">
