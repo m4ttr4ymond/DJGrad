@@ -68,5 +68,7 @@ veins-dsrc/**/results/
 veins-dsrc/**/*.so
 veins-dsrc/**/.qtenvrc
 veins-dsrc/**/*.anf
+security/wip/weights_alexnet/
+security/dlg/outputs*/
 veins-dsrc/.computed/
 !veins-dsrc/src

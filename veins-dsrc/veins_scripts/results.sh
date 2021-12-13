@@ -9,10 +9,10 @@ OUTPUT_FILE=${RESULTS_FOLDER}/${INPUT_FILE/".${EXTENSION}"/"-${EXTENSION}"}.csv
 
 case ${INPUT_FILE: -5:-4} in
   i)
-    INTERACTION="2s Interaction"
+    INTERACTION="2s Transmission"
     ;;
   s)
-    INTERACTION="1s Interaction"
+    INTERACTION="1s Transmission"
     ;;
   *)
     echo "INPUT ERROR"
@@ -20,7 +20,7 @@ case ${INPUT_FILE: -5:-4} in
 esac
 
 if [[ $INPUT_FILE == *"Drop"* ]]; then
-  DROP="90% Packet Drop"
+  DROP="10% Packet Drop"
 else
   DROP="No Packet Drops"
 fi
