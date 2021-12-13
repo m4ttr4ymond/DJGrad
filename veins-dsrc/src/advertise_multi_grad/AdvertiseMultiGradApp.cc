@@ -20,7 +20,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "advertise_gradient/AdvertiseGradientApp.h"
+#include "advertise_multi_grad/AdvertiseMultiGradApp.h"
 
 #include <string>
 
@@ -29,17 +29,20 @@
 
 using namespace veins;
 
-Define_Module(veins::AdvertiseGradientApp);
+Define_Module(veins::AdvertiseMultiGradApp);
 
 static const std::string gradient_vehicle_color = "blue";
+static const uint32_t MAX_WAIT_TIME = 2;
 
-void AdvertiseGradientApp::initialize(int stage)
+void AdvertiseMultiGradApp::initialize(int stage)
 {
     DemoBaseApplLayer::initialize(stage);
     if (stage == 0) {
         // Initializing members and pointers of your application goes here
         EV << "Initializing " << par("appName").stringValue() << std::endl;
         broadcasting = false;
+        transfers_in_progress = 0;
+        prev_transfers_in_progress = 0;
     }
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
@@ -57,20 +60,23 @@ void AdvertiseGradientApp::initialize(int stage)
     }
 }
 
-void AdvertiseGradientApp::finish()
+void AdvertiseMultiGradApp::finish()
 {
     DemoBaseApplLayer::finish();
     // statistics recording goes here
+    if (gradientCount < 1) {
+        gradientCount = 0;
+    }
     recordScalar("gradientCount", gradientCount);
 }
 
-void AdvertiseGradientApp::onBSM(DemoSafetyMessage* bsm)
+void AdvertiseMultiGradApp::onBSM(DemoSafetyMessage* bsm)
 {
     // Your application has received a beacon message from another car or RSU
     // code for handling the message goes here
 }
 
-void AdvertiseGradientApp::onWSM(BaseFrame1609_4* wsm)
+void AdvertiseMultiGradApp::onWSM(BaseFrame1609_4* wsm)
 {
     // Your application has received a data message from another car or RSU
     // code for handling the message goes here, see TraciDemo11p.cc for examples
@@ -83,22 +89,26 @@ void AdvertiseGradientApp::onWSM(BaseFrame1609_4* wsm)
         wsm->setSenderAddress(myId);
         wsm->setGradientHash(gradientHash);
         EV << findHost()->getFullName() << " sending gradients to " << senderAddress << std::endl;
-        sendDown(wsm);
-    } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {
-        // Set vehicle to blue
-        findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
-        
+        scheduleAt(simTime(), wsm);
+        transfers_in_progress = transfers_in_progress + 2;
+    } else if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(wsm)) {        
         LAddress::L2Type senderAddress = sgm->getSenderAddress();
         int senderGradientHash = sgm->getGradientHash();
-        EV << findHost()->getFullName() << " received gradientHash " \
-           << senderGradientHash << " from " << senderAddress << std::endl;
-        gradientHash = senderGradientHash;
-        gradientCount = 1;
-        receivedAddresses.insert(senderAddress);
+        if (receivedAddresses.find(senderAddress) != receivedAddresses.end()) {
+            gradientCount = 1;
+            gradientHash = senderGradientHash;
+            // Set vehicle to blue
+            findHost()->getDisplayString().setTagArg("i", 1, gradient_vehicle_color.c_str());
+        } else {
+            EV << findHost()->getFullName() << " received first gradientHash " \
+               << senderGradientHash << " from " << senderAddress << std::endl;
+            receivedAddresses.insert(senderAddress);
+            gradientCount = std::max(gradientCount, 0.5);
+        }
     }
 }
 
-void AdvertiseGradientApp::onWSA(DemoServiceAdvertisment* wsa)
+void AdvertiseMultiGradApp::onWSA(DemoServiceAdvertisment* wsa)
 {
     // Your application has received a service advertisement from another car or RSU
     // code for handling the message goes here, see TraciDemo11p.cc for examples
@@ -117,18 +127,32 @@ void AdvertiseGradientApp::onWSA(DemoServiceAdvertisment* wsa)
     }
 }
 
-void AdvertiseGradientApp::handleSelfMsg(cMessage* msg)
+void AdvertiseMultiGradApp::handleSelfMsg(cMessage* msg)
 {
-    DemoBaseApplLayer::handleSelfMsg(msg);
+    if (transfers_in_progress == 0) {
+        DemoBaseApplLayer::handleSelfMsg(msg);
+    }
+    if (SendGradientMessage* sgm = dynamic_cast<SendGradientMessage*>(msg)) {
+        sendDown(sgm);
+        transfers_in_progress = transfers_in_progress - 1;
+        if (transfers_in_progress > 0) {
+            scheduleAt(simTime() + MAX_WAIT_TIME - 1, sgm->dup());
+        }
+    }
     // this method is for self messages (mostly timers)
     // it is important to call the DemoBaseApplLayer function for BSM and WSM transmission
 }
 
-void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
+void AdvertiseMultiGradApp::handlePositionUpdate(cObject* obj)
 {
     // the vehicle has moved. Code that reacts to new positions goes here.
     // member variables such as currentPosition and currentSpeed are updated in the parent class
     DemoBaseApplLayer::handlePositionUpdate(obj);
+
+    if (transfers_in_progress == prev_transfers_in_progress) {
+        transfers_in_progress = 0;
+    }
+    prev_transfers_in_progress = transfers_in_progress;
 
     // If vehicle has gradients
     if (gradientHash != 0 && ! broadcasting) {
@@ -137,5 +161,9 @@ void AdvertiseGradientApp::handlePositionUpdate(cObject* obj)
         broadcasting = true;
     }
 
-    gradientCountVector.recordWithTimestamp(simTime(), gradientCount);
+    if (gradientCount < 1) {
+        gradientCountVector.recordWithTimestamp(simTime(), 0);
+    } else {
+        gradientCountVector.recordWithTimestamp(simTime(), gradientCount);
+    }
 }

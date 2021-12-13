@@ -53,8 +53,7 @@
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCIRegionOfInterest.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/mobility/traci/TraCICommandInterface.h \
   /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h \
-  advertise_gradient/RequestGradientMessage_m.h \
-  advertise_gradient/SendGradientMessage_m.h
+  msgs/RequestGradientMessage_m.h msgs/SendGradientMessage_m.h
 
 advertise_gradient/AdvertiseGradientApp.h:
 
@@ -162,6 +161,6 @@ advertise_gradient/AdvertiseGradientApp.h:
 
 /home/mwilmes2/GradSchool/veins/src/veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.h:
 
-advertise_gradient/RequestGradientMessage_m.h:
+msgs/RequestGradientMessage_m.h:
 
-advertise_gradient/SendGradientMessage_m.h:
+msgs/SendGradientMessage_m.h:

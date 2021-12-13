@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
-
-<!--
-// Copyright (C) 2011 Christoph Sommer <sommer@ccs-labs.org>
+//
+// Copyright (C) 2016 David Eckhoff <david.eckhoff@fau.de>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
-// SPDX-License-Identifier: (GPL-2.0-or-later OR CC-BY-SA-4.0)
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,21 +19,15 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// -
-//
-// At your option, you can also redistribute and/or modify this file
-// under a
-// Creative Commons Attribution-ShareAlike 4.0 International License.
-//
-// You should have received a copy of the license along with this
-// work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
-<!-- debug config -->
-<launch>
-    <basedir path="../two_vehicles/" />
-    <copy file="two_vehicles.net.xml" />
-    <copy file="two_vehicles.rou.xml" />
-    <copy file="two_vehicles.poly.xml" />
-    <copy file="two_vehicles.sumo.cfg" type="config" />
-</launch>
+package veins_dsrc.advertise_multi_grad;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
+
+//
+// network description file for your Veins Application. Add parameters here
+//
+simple AdvertiseMultiGradApp extends DemoBaseApplLayer
+{
+    @class(veins::AdvertiseMultiGradApp);
+    string appName = default("My Advertise Multiple Gradients App!");
+}
