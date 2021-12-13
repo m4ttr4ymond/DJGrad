@@ -20,7 +20,7 @@ We are interested in understanding the following aspects of our protocol:
 </p>
 
 3. **Security & Privacy:** How can a malicious vehicle attack other vehicles by exploiting this distributed learning protocol?
-    - See ???? folder
+    - See [security](security) folder
 <p align="center">
   <img src="images/backdoor_trigger.png" width="600" />
 </p>
